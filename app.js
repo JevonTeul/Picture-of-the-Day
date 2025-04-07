@@ -14,7 +14,7 @@ app.set('views', path.join(__dirname, 'views'));
 // API Configuration
 const SPACEX_API = 'https://api.spacexdata.com/v4/launches';
 const QUOTE_API = 'https://api.api-ninjas.com/v1/quotes?category=inspirational';
-const API_KEY = 'ailPAdR7MbGqv57542LzTA==sOrh6Xxy9vRwr1nb'; // Your API key
+const API_KEY = 'ailPAdR7MbGqv57542LzTA==sOrh6Xxy9vRwr1nb'; //my api login to recieve yours
 
 // Fallback data
 const FALLBACK_IMAGES = [
