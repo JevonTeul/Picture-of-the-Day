@@ -38,7 +38,7 @@ Then open your browser and navigate to: `http://localhost:3000`
 
 ## APIs Used
 - SpaceX: `https://api.spacexdata.com/v4/launches`
-- ZenQuotes API: `https://api.api-ninjas.com/v1/quotes?category=inspirational`
+- ZenQuotes API: `https://zenquotes.io/`
 
 ## Author
 Created by Jevon Teul. Contributions, feedback, and forks are welcome.
