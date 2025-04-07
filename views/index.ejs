@@ -1,0 +1,45 @@
+<%- include('partials/header') %>
+
+<div class="app-container">
+  <div class="welcome-screen">
+    <h1>NASA Picture of the Day</h1>
+    <button id="get-pic-btn">Get Pic of the Day</button>
+  </div>
+</div>
+
+<script>
+  document.getElementById('get-pic-btn')?.addEventListener('click', () => {
+    fetch('/get-content')
+      .then(response => response.json())
+      .then(data => {
+        document.querySelector('.app-container').innerHTML = `
+          <div class="polaroid-container">
+            <div class="polaroid">
+              <img src="${data.imageUrl}" alt="NASA Astronomy Picture" id="nasa-image">
+              <div class="polaroid-caption">
+                <p class="image-title">${data.imageTitle}</p>
+                <blockquote class="quote-text">"${data.quote}"</blockquote>
+                <p class="quote-author">- ${data.author}</p>
+              </div>
+            </div>
+            <button id="new-quote-btn">Generate New Quote</button>
+          </div>
+        `;
+        document.getElementById('new-quote-btn').addEventListener('click', getNewQuote);
+      });
+
+    function getNewQuote() {
+      fetch('/get-content')
+        .then(response => response.json())
+        .then(data => {
+          document.querySelector('.quote-text').textContent = `"${data.quote}"`;
+          document.querySelector('.quote-author').textContent = `- ${data.author}`;
+        })
+        .catch(error => {
+          console.error('Quote fetch error:', error);
+        });
+    }
+  });
+</script>
+
+<%- include('partials/footer') %>

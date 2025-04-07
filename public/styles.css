@@ -1,0 +1,137 @@
+:root {
+    --space-dark: #0B0D17;
+    --space-blue: #D0D6F9;
+    --space-white: #FFFFFF;
+    --space-accent: #818CAB;
+    --quote-dark: #1E1F29;
+  }
+  
+  body {
+    font-family: 'Barlow Condensed', sans-serif;
+    background-color: var(--space-dark);
+    color: var(--space-white);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image:
+      radial-gradient(circle at center, rgba(208, 214, 249, 0.08) 1px, transparent 1px),
+      radial-gradient(circle at center, rgba(208, 214, 249, 0.08) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+  }
+  
+  .app-container {
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .welcome-screen {
+    animation: fadeIn 1.5s ease-out;
+  }
+  
+  h1 {
+    font-family: 'Bellefair', serif;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--space-blue);
+  }
+  
+  button {
+    background-color: transparent;
+    color: var(--space-white);
+    border: 2px solid var(--space-blue);
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  button:hover {
+    background-color: var(--space-blue);
+    color: var(--space-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(208, 214, 249, 0.3);
+  }
+  
+  .polaroid-container {
+    animation: slideUp 1s ease-out;
+  }
+  
+  .polaroid {
+    background: white;
+    padding: 1rem 1rem 3rem 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transform: rotate(1deg);
+    margin: 0 auto 3rem;
+    max-width: 600px;
+    position: relative;
+  }
+  
+  #nasa-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #eee;
+  }
+  
+  .polaroid-caption {
+    background: var(--space-white);
+    padding: 1rem;
+    color: var(--quote-dark);
+    text-align: center;
+  }
+  
+  .image-title {
+    font-family: 'Bellefair', serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--quote-dark);
+  }
+  
+  .quote-text {
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #444;
+    margin: 0.5rem 0;
+  }
+  
+  .quote-author {
+    font-weight: bold;
+    color: #666;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    .image-title { font-size: 1.2rem; }
+    .quote-text { font-size: 1rem; }
+  }
+  
