@@ -1,45 +1,77 @@
-<%- include('partials/header') %>
-
-<div class="app-container">
-  <div class="welcome-screen">
-    <h1>NASA Picture of the Day</h1>
-    <button id="get-pic-btn">Get Pic of the Day</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Picture of the Day</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="grid-container">
+    <div class="content-container">
+      <div class="image-container">
+        <img id="spacex-image" src="<%= imageUrl %>" alt="SpaceX Launch">
+        <h2 class="image-title"><%= imageTitle %></h2>
+        <div class="loading" id="image-spinner">
+          <svg width="50" height="50" viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="20" stroke="white" stroke-width="4" fill="none" stroke-dasharray="31.415, 31.415"/>
+          </svg>
+        </div>
+      </div>
+      
+      <div class="quote-container">
+        <p class="quote-text" id="quote-content">"<%= quoteContent %>"</p>
+        <p class="quote-author" id="quote-author">- <%= quoteAuthor %></p>
+      </div>
+      
+      <button id="next-btn">New Content</button>
+    </div>
   </div>
-</div>
 
-<script>
-  document.getElementById('get-pic-btn')?.addEventListener('click', () => {
-    fetch('/get-content')
-      .then(response => response.json())
-      .then(data => {
-        document.querySelector('.app-container').innerHTML = `
-          <div class="polaroid-container">
-            <div class="polaroid">
-              <img src="${data.imageUrl}" alt="NASA Astronomy Picture" id="nasa-image">
-              <div class="polaroid-caption">
-                <p class="image-title">${data.imageTitle}</p>
-                <blockquote class="quote-text">"${data.quote}"</blockquote>
-                <p class="quote-author">- ${data.author}</p>
-              </div>
-            </div>
-            <button id="new-quote-btn">Generate New Quote</button>
-          </div>
-        `;
-        document.getElementById('new-quote-btn').addEventListener('click', getNewQuote);
-      });
-
-    function getNewQuote() {
-      fetch('/get-content')
-        .then(response => response.json())
-        .then(data => {
-          document.querySelector('.quote-text').textContent = `"${data.quote}"`;
-          document.querySelector('.quote-author').textContent = `- ${data.author}`;
-        })
-        .catch(error => {
-          console.error('Quote fetch error:', error);
-        });
+  <script>
+    const nextBtn = document.getElementById('next-btn');
+    const spacexImage = document.getElementById('spacex-image');
+    const quoteContent = document.getElementById('quote-content');
+    const quoteAuthor = document.getElementById('quote-author');
+    const spinner = document.getElementById('image-spinner');
+    
+    async function loadNewContent() {
+      try {
+        nextBtn.disabled = true;
+        spacexImage.style.opacity = '0.7';
+        spinner.classList.add('active');
+        
+        const response = await fetch('/next-content');
+        if (!response.ok) throw new Error('Network error');
+        
+        const data = await response.json();
+        
+        // Preload image
+        const img = new Image();
+        img.src = data.imageUrl;
+        img.onload = () => {
+          
+          spacexImage.src = data.imageUrl;
+          spacexImage.alt = data.imageTitle;
+          document.querySelector('.image-title').textContent = data.imageTitle;
+          quoteContent.textContent = `"${data.quoteContent}"`;
+          quoteAuthor.textContent = `- ${data.quoteAuthor}`;
+          
+          // Reset states
+          spacexImage.style.opacity = '1';
+          nextBtn.disabled = false;
+          spinner.classList.remove('active');
+        };
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to load new content. Please try again.');
+        nextBtn.disabled = false;
+        spinner.classList.remove('active');
+        spacexImage.style.opacity = '1';
+      }
     }
-  });
-</script>
-
-<%- include('partials/footer') %>
+    
+    nextBtn.addEventListener('click', loadNewContent);
+  </script>
+</body>
+</html>
